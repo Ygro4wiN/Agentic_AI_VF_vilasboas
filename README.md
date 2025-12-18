@@ -83,7 +83,7 @@ OLLAMA_MODEL=qwen2.5:7b
 ## Run locally (first time)
 
 ```bash
-git clone https://github.com/catarinatorres26/Agentic_AI_VF.git
+git clone https://github.com/Ygro4wiN/Agentic_AI_VF_vilasboas
 cd Agentic_AI_VF/audit-assistant
 
 # Environment
