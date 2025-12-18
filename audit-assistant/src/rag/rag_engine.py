@@ -50,7 +50,11 @@ class AuditRAG:
         )
         chunks = splitter.split_documents(documents)
 
-        embeddings = OllamaEmbeddings(model="nomic-embed-text")
+        embeddings = OllamaEmbeddings(
+            model="nomic-embed-text",
+            base_url=os.getenv("OLLAMA_BASE_URL")
+        )   
+
         self.vectorstore = FAISS.from_documents(chunks, embeddings)
 
     def search_docs(self, query: str, k: int = 3):

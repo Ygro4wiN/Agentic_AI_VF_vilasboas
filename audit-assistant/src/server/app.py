@@ -5,6 +5,12 @@ import time
 from fastapi import FastAPI, HTTPException, UploadFile, File
 from pydantic import BaseModel
 import ollama
+import os
+
+ollama_client = ollama.Client(
+    host=os.getenv("OLLAMA_BASE_URL", "http://ollama:11434")
+)
+
 
 from src.rag.rag_engine import AuditRAG
 from src.memory.memory_store import MemoryStore
@@ -140,7 +146,7 @@ async def ask_agent(body: AskRequest):
     # -----------------------------
     try:
         t1 = time.perf_counter()
-        response = ollama.chat(
+        response = ollama_client.chat(
             model="qwen2.5:7b",
             messages=[
                 {"role": "system", "content": system_prompt},
@@ -148,6 +154,7 @@ async def ask_agent(body: AskRequest):
                 {"role": "user", "content": question},
             ],
         )
+
         llm_ms = (time.perf_counter() - t1) * 1000.0
         answer = response["message"]["content"]
     except Exception as e:

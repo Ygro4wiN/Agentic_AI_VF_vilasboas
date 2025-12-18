@@ -6,6 +6,8 @@ services:
       - "11434:11434"
     volumes:
       - ollama_data:/root/.ollama
+    environment:
+      - OLLAMA_KEEP_ALIVE=-1
     restart: unless-stopped
 
   api:
@@ -15,7 +17,7 @@ services:
       - "8000:8000"
     environment:
       # Faz a lib do ollama no Python falar com o serviço ollama do compose
-      - OLLAMA_HOST=http://ollama:11434
+      - OLLAMA_BASE_URL=http://ollama:11434
     volumes:
       # Para poderes atualizar PDFs sem rebuild
       - ./data:/app/data
